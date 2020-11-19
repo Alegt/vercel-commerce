@@ -76,6 +76,7 @@ export default function Home({
 
   return (
     <div>
+      "Hello Backcountry"
       <Grid>
         {featured.slice(0, 3).map(({ node }, i) => (
           <ProductCard
