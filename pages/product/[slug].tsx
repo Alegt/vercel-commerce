@@ -9,7 +9,7 @@ import getAllPages from '@bigcommerce/storefront-data-hooks/api/operations/get-a
 import getProduct from '@bigcommerce/storefront-data-hooks/api/operations/get-product'
 import { Layout } from '@components/core'
 import { ProductView } from '@components/product'
-import getAllProductPaths from '@bigcommerce/storefront-data-hooks/api/operations/get-all-product-paths'
+// import getAllProductPaths from '@bigcommerce/storefront-data-hooks/api/operations/get-all-product-paths'
 
 export async function getStaticProps({
   params,
@@ -31,25 +31,29 @@ export async function getStaticProps({
 
   return {
     props: { pages, product },
-    revalidate: 200,
+    revalidate: 60*5,
   }
 }
 
 export async function getStaticPaths({ locales }: GetStaticPathsContext) {
-  const { products } = await getAllProductPaths()
+  // const { products } = await getAllProductPaths()
 
+  // return {
+  //   paths: locales
+  //     ? locales.reduce<string[]>((arr, locale) => {
+  //         // Add a product path for every locale
+  //         products.forEach((product) => {
+  //           arr.push(`/${locale}/product${product.node.path}`)
+  //         })
+  //         return arr
+  //       }, [])
+  //     : products.map((product) => `/product${product.node.path}`),
+  //   // If your store has tons of products, enable fallback mode to improve build times!
+  //   fallback: 'false',
+  // }
   return {
-    paths: locales
-      ? locales.reduce<string[]>((arr, locale) => {
-          // Add a product path for every locale
-          products.forEach((product) => {
-            arr.push(`/${locale}/product${product.node.path}`)
-          })
-          return arr
-        }, [])
-      : products.map((product) => `/product${product.node.path}`),
-    // If your store has tons of products, enable fallback mode to improve build times!
-    fallback: false,
+    paths: [],
+    fallback: 'blocking',
   }
 }
 
